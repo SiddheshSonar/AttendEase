@@ -35,9 +35,10 @@ const Upload = () => {
   }
 
   return (
-    <div>
+    <div className="up-main">
       <NavB />
-      <h1 className="title">Upload Your File</h1>
+      <div className="up-box">
+      <h1 className="upload-title">Upload Your File</h1>
       <div className="upload-container">
         <div
           className="dropzone"
@@ -65,6 +66,7 @@ const Upload = () => {
           UPLOAD FILE
         </button>
         {uploadStatus && <p>{uploadStatus}</p>}
+      </div>
       </div>
     </div>
   );
