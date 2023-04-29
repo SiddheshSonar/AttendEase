@@ -197,7 +197,10 @@ td {
   color: aqua;
   margin: 4%;
 }
-
+.scan-title{
+  color: aqua;
+  padding: 20px;
+}
 .up-box {
   display: flex;
   align-items: center;

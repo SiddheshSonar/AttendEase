@@ -88,3 +88,16 @@ app.post('/upload', upload.single('file'), (req, res) => {
 app.get('/', (req, res) => {
   res.send('AttendWise Homepage');
 });
+
+app.get("/qr/:id", async (req, res) => {
+  try{
+  console.log(req.params.id);
+  const data = {
+    "encrypted_string": req.params.id,
+};
+const record = await pb.collection('rohantest').update('959gfscofc4dyw0', data);
+res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+  }
+});
