@@ -159,9 +159,13 @@ const UpPage = ({ op, record }) => {
                 </LocalizationProvider>
             </div>
             {selectedCourse && date && <div className='atd-info'>
-                <h2 className='info-title'>Attendence Info</h2>
+                <h2 className='info-title'>Attendance Info</h2>
                 <h4 className='a-info'>Subject: {selectedCourse}</h4>
-                <h4 className='a-info'>Date: {JSON.stringify(date).replace(/"|'/g, '')}</h4>
+                    {/* <h4 className='a-info'>Date: {new Date(date).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</h4>
+                    <h4 className='a-time'>Time: {new Date(date).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}</h4> */}
+                    <h4 className='a-info'>Date and Time: {new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}</h4>
+                
+
             </div>}
             <button className='main-btn btn btn-primary' onClick={() => setOpen(true)}>{op}</button>
             <Modal open={open} onClose={() => setOpen(false)}>

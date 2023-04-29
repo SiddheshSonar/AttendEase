@@ -44,8 +44,8 @@ function Home() {
           <NavB />
           <div className="head-container">
             <h2 className="heading">Hello Admin! What would you like to do:</h2>
-            {/* <button className="btn btn-primary" onClick={navigateToUpdate}>UPDATE ATTENDANCE</button> */}
             <button className="btn btn-primary" onClick={navigateToStudents}>VIEW ATTENDANCE</button>
+            <button className="btn btn-primary" onClick={navigateToUpdate}>UPDATE ATTENDANCE</button>
             <button className="btn btn-primary" onClick={navigateToUpload}>ADD ATTENDANCE SHEET</button>
           </div>
           <div className="footer">
