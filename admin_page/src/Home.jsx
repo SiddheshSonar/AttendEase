@@ -56,10 +56,10 @@ function Home() {
           <div className="head-container">
             <h2 className="heading">Hello Admin! What would you like to do:</h2>
             <div className="btn-box">
-            <button className="btn btn-primary" onClick={navigateToStudents}><VisibilityIcon style={{marginBottom:"3px", marginRight: "5px"}}/>VIEW ATTENDANCE</button>
-            <button className="btn btn-primary" onClick={navigateToUpdate}><UpdateIcon style={{marginBottom:"3px", marginRight: "5px"}}/>UPDATE ATTENDANCE</button>
-            <button className="btn btn-primary" onClick={navigateToUpload}><NoteAddIcon style={{marginBottom:"3px", marginRight: "5px"}}/>ADD ATTENDANCE SHEET</button>
-            <button className="btn btn-primary" onClick={navigateToPrint}><PrintIcon style={{marginBottom:"3px", marginRight: "5px"}}/>PRINT ATTENDANCE LIST</button>
+            <button className="home-btn btn btn-primary" onClick={navigateToStudents}><VisibilityIcon style={{marginBottom:"3px", marginRight: "5px"}}/>VIEW ATTENDANCE</button>
+            <button className="home-btn btn btn-primary" onClick={navigateToUpdate}><UpdateIcon style={{marginBottom:"3px", marginRight: "5px"}}/>UPDATE ATTENDANCE</button>
+            <button className="home-btn btn btn-primary" onClick={navigateToUpload}><NoteAddIcon style={{marginBottom:"3px", marginRight: "5px"}}/>ADD ATTENDANCE SHEET</button>
+            <button className="home-btn btn btn-primary" onClick={navigateToPrint}><PrintIcon style={{marginBottom:"3px", marginRight: "5px"}}/>PRINT ATTENDANCE LIST</button>
             </div>
           </div>
           <div className="footer">

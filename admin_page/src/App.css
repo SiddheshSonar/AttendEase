@@ -51,9 +51,7 @@ td {
 
 .main {
   min-height: 100%;
-  /* set container to full viewport height */
   position: relative;
-  /* set position to relative to contain footer */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,10 +90,15 @@ td {
 
 .btn {
   width: 250px;
+  max-width: fit-content;
   height: 50px;
   margin: 10px;
   text-align: center;
   font-weight: 600;
+}
+
+.home-btn {
+  max-width: 250px !important;
 }
 
 .search-bar {
@@ -165,13 +168,7 @@ td {
 #demo-simple-select-helper-label{
   color: black;
 }
-/* .upload-container {
-  position: absolute;
-  margin-top: 10%;
-  left: 50%;
-  top: 30%;
-  transform: translate(-50%,-50%);
-} */
+
 .dropzone {
   width: 400px;
   height: 250px;
@@ -211,4 +208,43 @@ td {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.pt-btn {
+  max-width: 200px;
+}
+
+.pt-container {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.pt-btn-box {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.pt-title {
+  margin-top: 5%;
+  color: white;
+}
+
+.pt-text {
+  color: black;
+  width: 100px;
+}
+
+.def-table {
+  border: 4px solid black;
+}
+.def-table th,
+.def-table td {
+  border: 2px solid black;
 }

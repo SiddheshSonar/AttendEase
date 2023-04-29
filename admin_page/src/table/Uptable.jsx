@@ -42,7 +42,6 @@ const StudTable = () => {
       {!isLoading && (
         <div className="spage">
           <div className="chart">
-            {/* render Chart component only if selectedRecord exists */}
             {selectedRecord && <UpPage op={operation} record={selectedRecord} course={courses}/>}
           </div>
           <div className="search-table">
