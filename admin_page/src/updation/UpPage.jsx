@@ -16,7 +16,7 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import Typography from '@mui/joy/Typography';
 import { pb } from '../login_page/Login';
 
-const UpPage = ({ op, record }) => {
+const UpPage = ({ op, record, course }) => {
     const [date, setDate] = useState("")
     const [selectedCourse, setSelectedCourse] = useState("")
     const [open, setOpen] = useState(false);
@@ -37,10 +37,23 @@ const UpPage = ({ op, record }) => {
         setSelectedCourse(event.target.value);
     };
 
+    // useEffect(() => {
+    //     async function getCourses() {
+    //         try {
+    //             const course_info = await pb.collection('courses').getOne(course.id, {
+    //                 expand: 'students_enrolled.username',
+    //             });
+    //             console.log(course_info);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     getCourses()
+    // }, [])
+
     async function updateData(data) {
         try {
             const rec = await pb.collection('students').update(record.id, data);
-            console.log(rec)
             return true
         } catch (error) {
             console.log(error)
@@ -91,8 +104,8 @@ const UpPage = ({ op, record }) => {
                         studentDate.getFullYear() !== lecDate.getFullYear()
                     );
                 });
+                student[selectedCourse] = afterDelete;
             }
-            student[selectedCourse] = afterDelete;
             setNewData(prevData => ({
                 ...prevData,
                 attendance: {
@@ -161,10 +174,8 @@ const UpPage = ({ op, record }) => {
             {selectedCourse && date && <div className='atd-info'>
                 <h2 className='info-title'>Attendance Info</h2>
                 <h4 className='a-info'>Subject: {selectedCourse}</h4>
-                    {/* <h4 className='a-info'>Date: {new Date(date).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</h4>
-                    <h4 className='a-time'>Time: {new Date(date).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}</h4> */}
-                    <h4 className='a-info'>Date and Time: {new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}</h4>
-                
+                <h4 className='a-info'>Date and Time: {new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}</h4>
+
 
             </div>}
             <button className='main-btn btn btn-primary' onClick={() => setOpen(true)}>{op}</button>
