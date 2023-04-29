@@ -39,7 +39,7 @@ function NavB() {
                         height="25"
                         className="d-inline-block align-top"
                     />{' '}
-                    AttendWise Admin Page</Navbar.Brand>
+                    AttendEase Admin Page</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
