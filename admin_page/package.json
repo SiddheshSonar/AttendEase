@@ -1,0 +1,48 @@
+{
+  "name": "admin_page",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/joy": "^5.0.0-alpha.76",
+    "@mui/material": "^5.11.16",
+    "@mui/x-date-pickers": "^6.0.4",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.2.3",
+    "cdbreact": "^1.5.11",
+    "chart.js": "^4.2.1",
+    "dayjs": "^1.11.7",
+    "faker": "^6.6.6",
+    "framer-motion": "^10.0.1",
+    "mdb-react-ui-kit": "^6.0.0",
+    "pocketbase": "^0.12.0",
+    "pocketbase-react": "^0.1.28",
+    "react": "^18.2.0",
+    "react-axios": "^2.0.6",
+    "react-bootstrap": "^2.7.2",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.0",
+    "react-loading": "^2.0.3",
+    "react-router": "^6.8.1",
+    "react-router-dom": "^6.8.1",
+    "react-select": "^5.7.2",
+    "react-toastify": "^9.1.1",
+    "reactstrap": "^9.1.9"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "tailwindcss": "^3.2.7",
+    "vite": "^4.1.0"
+  }
+}

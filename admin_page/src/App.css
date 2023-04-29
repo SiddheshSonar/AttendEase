@@ -1,0 +1,153 @@
+html,
+body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 50px;
+  /* adjust this value to match the height of your footer */
+}
+
+.footer {
+  margin-top: 5%;
+  height: 40px;
+}
+
+.sec {
+  margin-top: 5px;
+}
+
+.cont {
+  display: flex;
+  flex-direction: column;
+}
+
+.spage {
+  margin-top: 2%;
+}
+
+.table {
+  /* width: 500px; */
+  margin-top: 4%;
+  padding: 0 15%;
+  /* padding-right: 15%; */
+
+}
+
+.studp {
+  /* height: 50px; */
+  background-color: #243b55;
+}
+
+.atbt,
+th,
+td {
+  text-align: center;
+  color: #ffffff;
+}
+
+.main {
+  min-height: 100%;
+  /* set container to full viewport height */
+  position: relative;
+  /* set position to relative to contain footer */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer {
+  position: fixed;
+  bottom: 35%;
+  /* top: 100%; */
+  left: 0;
+  width: 100%;
+  /* padding: 20px; */
+}
+
+.heading {
+  color: #ffffff;
+}
+
+.head-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.btn {
+  width: 250px;
+  width: fit-content;
+  margin: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.search-bar {
+  margin-top: 3%;
+  margin-bottom: -2%;
+  width: 400px;
+  text-align: left;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.search-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.up-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.up-title {
+  color: #ffffff;
+}
+
+.date-time {
+  margin: 10px;
+}
+
+.main-btn {
+  height: 50px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  /* cursor: pointer; */
+}
+
+.table-head {
+  margin-top: 5%;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.atd-info {
+  margin: 10px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.load-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.upload-container {
+  
+}
