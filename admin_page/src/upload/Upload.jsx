@@ -51,6 +51,7 @@ const Upload = () => {
             <p>Drag and drop a file here or click to select a file.</p>
           )}
         </div>
+        <div className="up-btn-holder">
         <input type="file" onChange={handleFile} accept=".csv" style={{ display: "none" }} />
         <button
           className="up-btn btn btn-primary"
@@ -66,6 +67,7 @@ const Upload = () => {
           UPLOAD FILE
         </button>
         {uploadStatus && <p>{uploadStatus}</p>}
+        </div>
       </div>
       </div>
     </div>

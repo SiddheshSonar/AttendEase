@@ -36,8 +36,8 @@ function NavB() {
                         alt="Logo"
                         src={Logo}
                         width="30"
-                        height="25"
-                        className="d-inline-block align-top"
+                        height="30"
+                        className="logo-image d-inline-block align-top"
                     />{' '}
                     AttendEase Admin Page</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -48,6 +48,8 @@ function NavB() {
                         <Nav.Link href="./home">Home</Nav.Link>
                         <Nav.Link href="./view">View</Nav.Link>
                         <Nav.Link href="./update">Update</Nav.Link>
+                        <Nav.Link href="./upload">Upload</Nav.Link>
+                        <Nav.Link href="./download">Print</Nav.Link>
                         <Nav.Link onClick={() => setOpen(true)}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

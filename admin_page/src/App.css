@@ -183,7 +183,7 @@ td {
 .up-btn{
   margin-top: 20px;
   align-items: center;
-  margin-left: 48px;
+  /* margin-left: 48px; */
 }
 .title-font{
   font-size: 25px;
@@ -210,6 +210,13 @@ td {
   flex-direction: column;
 }
 
+.up-btn-holder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .pt-btn {
   max-width: 200px;
 }
@@ -220,10 +227,10 @@ td {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .pt-btn-box {
-  margin: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -232,7 +239,7 @@ td {
 }
 
 .pt-title {
-  margin-top: 5%;
+  margin-top: 10%;
   color: white;
 }
 
@@ -242,9 +249,39 @@ td {
 }
 
 .def-table {
+  margin-top: 1%;
   border: 4px solid black;
+  width: 90%;
 }
 .def-table th,
 .def-table td {
   border: 2px solid black;
+}
+
+.gray-cell {
+  background-color: #d3d3d3; /* Change this to the desired shade of gray */
+}
+
+.print-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dwn-btn {
+  margin-top: 1% !important;
+  height: 40px;
+}
+
+.def-list {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.def-list-title {
+  margin-top: 2%;
 }

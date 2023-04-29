@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavB from '../Navbar';
 import PrintTable from '../table/PrintTable';
 import { pb } from '../login_page/Login';
-import Button from '@mui/material/Button';
-import DownloadIcon from '@mui/icons-material/Download';
+
 
 const Download = () => {
   const [student, setStudent] = useState({});
@@ -45,13 +44,6 @@ const Download = () => {
         {div && (
           <>
             <PrintTable className='pt-table' divison={div} />
-            <Button
-              variant='contained'
-              color='success'
-              className='dwn-btn btn btn-primary'
-            >
-              <DownloadIcon /> Download List
-            </Button>
           </>
         )}
       </div>
