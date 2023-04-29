@@ -5,6 +5,7 @@ import Home from "../Home";
 import Students from "../Students";
 import Update from "../updation/Update";
 import Upload from "../upload/Upload";
+import Download from "../print/Download";
 import InitialTransition from "../login_page/Loading";
 
 function PageRoute() {
@@ -18,6 +19,7 @@ function PageRoute() {
             <Route path="/view" element={<Students />}/>
             <Route path="/update" element={<Update />}/>
             <Route path="/upload" element={<Upload />}/>
+            <Route path="/download" element={<Download />}/>
         </Routes>
     )
 }

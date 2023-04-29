@@ -7,6 +7,7 @@ import UpPage from "../updation/UpPage";
 const StudTable = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [records, setRecords] = useState([]);
+  const [courses, setCourses] = useState(null);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [operation, setOperation] = useState("");
@@ -15,6 +16,8 @@ const StudTable = () => {
     async function fetchData() {
       const response = await pb.collection("students").getFullList({});
       setRecords(response);
+      const course = await pb.collection("courses").getFullList({});
+      setCourses(course)
       setIsLoading(false);
     }
     fetchData();
@@ -40,7 +43,7 @@ const StudTable = () => {
         <div className="spage">
           <div className="chart">
             {/* render Chart component only if selectedRecord exists */}
-            {selectedRecord && <UpPage record={selectedRecord} op={operation}/>}
+            {selectedRecord && <UpPage op={operation} record={selectedRecord} course={courses}/>}
           </div>
           <div className="search-table">
             <h2 className="table-head">Search Students By UID</h2>

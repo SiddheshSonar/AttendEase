@@ -16,14 +16,17 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import Typography from '@mui/joy/Typography';
 import { pb } from '../login_page/Login';
 
-const UpPage = ({ op, record }) => {
+const UpPage = ({ op, record, course }) => {
     const [date, setDate] = useState("")
     const [selectedCourse, setSelectedCourse] = useState("")
     const [open, setOpen] = useState(false);
     const [variant, setVariant] = useState(undefined);
     const [changes, setChanges] = useState(undefined);
     const [newData, setNewData] = useState(record);
-    const courses = (Object.keys(record.attendance))
+    // const courses = (Object.keys(record.attendance))
+//     const courses = course.map((course, index) =>
+//     <MenuItem key={index} value={course}>{course}</MenuItem>
+// )
 
     const handleAccept = (newDate) => {
         setDate(newDate);
@@ -37,10 +40,23 @@ const UpPage = ({ op, record }) => {
         setSelectedCourse(event.target.value);
     };
 
+    // useEffect(() => {
+    //     async function getCourses() {
+    //         try {
+    //             const course_info = await pb.collection('courses').getOne(course.id, {
+    //                 expand: 'students_enrolled.username',
+    //             });
+    //             console.log(course_info);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     getCourses()
+    // }, [])
+
     async function updateData(data) {
         try {
             const rec = await pb.collection('students').update(record.id, data);
-            console.log(rec)
             return true
         } catch (error) {
             console.log(error)
@@ -57,6 +73,11 @@ const UpPage = ({ op, record }) => {
         const student = record.attendance
         if (op === "CONFIRM ADDITION" && date && selectedCourse) {
             setVariant('soft')
+            console.log(student[selectedCourse])
+            if(!student.hasOwnProperty(selectedCourse)) {
+                student[selectedCourse] = []
+            }
+            console.log(student[selectedCourse])
             console.log("Data Added")
             student[selectedCourse].push(newDate)
             console.log(student[selectedCourse])
@@ -91,8 +112,8 @@ const UpPage = ({ op, record }) => {
                         studentDate.getFullYear() !== lecDate.getFullYear()
                     );
                 });
+                student[selectedCourse] = afterDelete;
             }
-            student[selectedCourse] = afterDelete;
             setNewData(prevData => ({
                 ...prevData,
                 attendance: {
@@ -115,8 +136,8 @@ const UpPage = ({ op, record }) => {
         }
     }
 
-    const courseNames = courses.map((course, index) =>
-        <MenuItem key={index} value={course}>{course}</MenuItem>
+    const courseNames = course.map((course, index) =>
+        <MenuItem key={index} value={course.course_name}>{course.course_name}</MenuItem>
     )
 
     return (
@@ -159,9 +180,11 @@ const UpPage = ({ op, record }) => {
                 </LocalizationProvider>
             </div>
             {selectedCourse && date && <div className='atd-info'>
-                <h2 className='info-title'>Attendence Info</h2>
+                <h2 className='info-title'>Attendance Info</h2>
                 <h4 className='a-info'>Subject: {selectedCourse}</h4>
-                <h4 className='a-info'>Date: {JSON.stringify(date).replace(/"|'/g, '')}</h4>
+                <h4 className='a-info'>Date and Time: {new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })}</h4>
+
+
             </div>}
             <button className='main-btn btn btn-primary' onClick={() => setOpen(true)}>{op}</button>
             <Modal open={open} onClose={() => setOpen(false)}>

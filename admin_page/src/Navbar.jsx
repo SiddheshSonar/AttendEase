@@ -47,7 +47,7 @@ function NavB() {
                     <Nav>
                         <Nav.Link href="./home">Home</Nav.Link>
                         <Nav.Link href="./view">View</Nav.Link>
-                        {/* <Nav.Link href="./update">Update</Nav.Link> */}
+                        <Nav.Link href="./update">Update</Nav.Link>
                         <Nav.Link onClick={() => setOpen(true)}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

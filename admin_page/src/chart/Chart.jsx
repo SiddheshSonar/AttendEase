@@ -59,16 +59,12 @@ const Chart = (props) => {
             label: 'lectures attended',
             data: attended,
             backgroundColor: percentageAttended.map((percentage) =>
-            percentage >= 0.75 ? '#00FF00' : 'red'),
-            borderColor: 'black',
-            borderWidth: 1,
+            percentage >= 0.75 ? '#00FF00' : 'red')
           },
           {
             label: 'total lectures',
             data: totalLecs,
-            backgroundColor: '#0059ff',
-            borderColor: 'black',
-            borderWidth: 1,
+            backgroundColor: '#0059ff'
           },
         ],
       };
