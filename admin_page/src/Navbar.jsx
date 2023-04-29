@@ -50,6 +50,7 @@ function NavB() {
                         <Nav.Link href="./update">Update</Nav.Link>
                         <Nav.Link href="./upload">Upload</Nav.Link>
                         <Nav.Link href="./download">Print</Nav.Link>
+                        <Nav.Link href="./qrgen8r">QR Scanner</Nav.Link>
                         <Nav.Link onClick={() => setOpen(true)}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

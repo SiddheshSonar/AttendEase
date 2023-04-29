@@ -44,11 +44,11 @@ const QrCode = () => {
                 />
                 <div className="input__group" style={{ padding: "2.5vmax", borderWidth:"0px", borderRadius:"3vmax"}}>
                     <input
-                    style={{borderWidth:"0px", borderRadius:"0.7vmax"}}
+                    style={{borderWidth:"0px", borderRadius:"0.7vmax", textAlign:"center"}}
                         type="text"
                         value={url}
                         onChange={qrCodeEncoder}
-                        placeholder="add subject here"
+                        placeholder="Add Subject Here"
                     />
                 </div>
             </div>

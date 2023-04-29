@@ -9,6 +9,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import UpdateIcon from '@mui/icons-material/Update';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import PrintIcon from '@mui/icons-material/Print';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+
 
 function Home() {
   const navigate = useNavigate();
@@ -67,7 +69,7 @@ function Home() {
             <button className="home-btn btn btn-primary" onClick={navigateToUpdate}><UpdateIcon style={{marginBottom:"3px", marginRight: "5px"}}/>UPDATE ATTENDANCE</button>
             <button className="home-btn btn btn-primary" onClick={navigateToUpload}><NoteAddIcon style={{marginBottom:"3px", marginRight: "5px"}}/>ADD ATTENDANCE SHEET</button>
             <button className="home-btn btn btn-primary" onClick={navigateToPrint}><PrintIcon style={{marginBottom:"3px", marginRight: "5px"}}/>PRINT ATTENDANCE LIST</button>
-            <button className="home-btn btn btn-primary" onClick={navigateToQR}><PrintIcon style={{marginBottom:"3px", marginRight: "5px"}}/>QR ATTENDANCE</button>
+            <button className="home-btn btn btn-primary" onClick={navigateToQR}><QrCodeScannerIcon style={{marginBottom:"3px", marginRight: "5px"}}/>QR ATTENDANCE</button>
             </div>
           </div>
           <div className="footer">
