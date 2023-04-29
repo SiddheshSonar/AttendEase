@@ -74,7 +74,7 @@ class NotificationService {
                 importance: Importance.max,
                 priority: Priority.max,
                 icon: '@mipmap/ic_launcher'),
-            iOS: DarwinNotificationDetails(
+            iOS: const DarwinNotificationDetails(
               sound: "default.wav",
               presentAlert: true,
               presentBadge: true,

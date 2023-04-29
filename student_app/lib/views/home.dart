@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:attendease/components/attendance_graph.dart';
+import 'package:attendease/components/scanner.dart';
 import 'package:attendease/controllers/home_controller.dart';
 import 'package:attendease/database/db.dart';
 import 'package:attendease/main.dart';
 import 'package:attendease/views/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
@@ -84,19 +88,59 @@ class _MainState extends State<Main> {
                         icon: const Icon(Icons.calendar_view_day_rounded)),
                     IconButton(
                         splashRadius: 32,
-                        onPressed: () {},
-                        icon: const Icon(Icons.notifications_active_outlined)),
+                        // iconSize: 50,
+                        onPressed: () {
+                          _homeController.homePageController.animateToPage(2,
+                              duration: pageAnimationDuration,
+                              curve: pageAnimationCurve);
+                        },
+                        icon: const Icon(Icons.notes_rounded)),
                     IconButton(
                       splashRadius: 32,
                       icon: const Icon(Icons.logout_rounded),
                       onPressed: () {
-                        PbDb.pb.authStore.clear();
-                        final box = GetStorage();
-                        box.erase();
-                        Navigator.pushAndRemoveUntil(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const Login();
-                        }), (r) => false);
+                        // show a dialog to confirm logout
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                                child: AlertDialog(
+                                  backgroundColor: Colors.cyan.withOpacity(0.1),
+                                  title: const Text('Confirm Logout'),
+                                  content: const Text(
+                                      'Are you sure you want to logout?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Cancel')),
+                                    TextButton(
+                                        onPressed: () {
+                                          // logout
+                                          PbDb.pb.authStore.clear();
+                                          final box = GetStorage();
+                                          box.erase();
+                                          Navigator.pushAndRemoveUntil(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return const Login();
+                                          }), (r) => false);
+                                        },
+                                        child: const Text('Logout')),
+                                  ],
+                                ),
+                              );
+                            });
+                        // PbDb.pb.authStore.clear();
+                        // final box = GetStorage();
+                        // box.erase();
+                        // Navigator.pushAndRemoveUntil(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return const Login();
+                        // }), (r) => false);
                       },
                     ),
                   ],
@@ -106,19 +150,60 @@ class _MainState extends State<Main> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => attendValidate(),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32),
-        ),
-        tooltip: "Submit Attendance",
-        child: const Icon(Icons.fingerprint),
+      // floatingActionButton: FloatingActionButton(
+
+      //   onPressed: () => attendValidate(),
+      //   shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(32),
+      //   ),
+      //   tooltip: "Submit Attendance",
+      //   backgroundColor: Colors.blueGrey.withOpacity(0.3),
+      //   child: const Icon(
+      //     Icons.fingerprint,
+      //     size: 36,
+      //   ),
+      // ),
+      floatingActionButton: SpeedDial(
+        // implement above feature along with an extra button with qr as icon
+        backgroundColor: Colors.blueGrey.withOpacity(0.3),
+        overlayColor: Colors.black.withOpacity(0.5),
+        overlayOpacity: 0.5,
+        curve: Curves.easeInOut,
+        children: [
+          SpeedDialChild(
+              child: const Icon(Icons.qr_code),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
+              ),
+              backgroundColor: Colors.blueGrey.withOpacity(0.3),
+              label: 'Scan QR',
+              onTap: () {
+                // scan qr
+                // _homeController.scanQR();
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const ScanQR();
+                }));
+              }),
+          SpeedDialChild(
+              child: const Icon(Icons.fingerprint),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
+              ),
+              backgroundColor: Colors.blueGrey.withOpacity(0.3),
+              label: 'Submit Attendance',
+              onTap: () {
+                // submit attendance
+                attendValidate();
+              }),
+        ],
+        // implement above feature along with an extra button with qr as icon
+        child: const Icon(Icons.bolt),
       ),
 
       // body: HomePage(homeController: _homeController),
       body: PageView(
-        children: _homeController.home,
         controller: _homeController.homePageController,
+        children: _homeController.home,
       ),
       // ),
     );

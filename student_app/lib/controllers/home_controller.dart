@@ -1,17 +1,17 @@
 import 'package:attendease/components/attendance_graph.dart';
-import 'package:attendease/helper/notification_service.dart';
+
 import 'package:attendease/models/home_model.dart';
 import 'package:attendease/pages/event_cal.dart';
+import 'package:attendease/pages/notes_page.dart';
 import 'package:attendease/views/home.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:get/get.dart';
 
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
-
+// import 'package:timezone/data/latest.dart' as tz;
+// import 'package:timezone/timezone.dart' as tz;
 
 class HomeController extends GetxController {
   final RxBool isFetching = true.obs;
@@ -30,9 +30,15 @@ class HomeController extends GetxController {
   final EventController eventController = EventController();
   // add data to this controller receieved from the server
   HomeController() {
-    home = [HomePage(homeController: this), EventCalendar(
-      homeController: this,
-    )];
+    home = [
+      HomePage(homeController: this),
+      EventCalendar(
+        homeController: this,
+      ),
+      NotesPage(
+        key: noteStateKey,
+      )
+    ];
     homeModel = HomeModel(this);
   }
 
@@ -53,7 +59,7 @@ class HomeController extends GetxController {
     //     body: "This is a test notification",
     //     // payload: "test payload"
     //     );
-        // await Future.delayed(const Duration(seconds: 30));
+    // await Future.delayed(const Duration(seconds: 30));
     // NotificationService().scheduleNotification(scheduledNotificationDateTime: DateTime.now().add(const Duration(seconds: 10)), title: "Test Background Notification", body: "This is a test notification");
     // NotificationService().scheduleNotification(1, "works", "alas", DateTime.now().add(const Duration(seconds: 20)));
 //     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

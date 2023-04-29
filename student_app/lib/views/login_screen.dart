@@ -30,6 +30,7 @@ class _LoginState extends State<Login> {
     //create a minimal login page
     return Scaffold(
       backgroundColor: const Color(0xFF232946),
+      // backgroundColor: const Color(0xFF4ECCA3),
       body: Center(
         child: SingleChildScrollView(
           child: Theme(
