@@ -4,6 +4,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_beacon (0.3.0):
     - Flutter
+  - flutter_local_notifications (0.0.1):
+    - Flutter
   - flutter_native_splash (0.0.1):
     - Flutter
   - local_auth_ios (0.0.1):
@@ -20,6 +22,7 @@ DEPENDENCIES:
   - beacon_broadcast (from `.symlinks/plugins/beacon_broadcast/ios`)
   - Flutter (from `Flutter`)
   - flutter_beacon (from `.symlinks/plugins/flutter_beacon/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
@@ -33,6 +36,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_beacon:
     :path: ".symlinks/plugins/flutter_beacon/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   local_auth_ios:
@@ -48,6 +53,7 @@ SPEC CHECKSUMS:
   beacon_broadcast: 2c2562111f7b7e0f1ab59487f6bc805805e3c9f3
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_beacon: 2525df9d96b904623f325968a73bac805e648119
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   local_auth_ios: c6cf091ded637a88f24f86a8875d8b0f526e2605
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9

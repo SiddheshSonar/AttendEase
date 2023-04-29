@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:attendease/controllers/home_controller.dart';
 import 'package:attendease/database/db.dart';
+import 'package:attendease/helper/notification_service.dart';
 import 'package:attendease/main.dart';
 import 'package:attendease/views/login_screen.dart';
 import 'package:calendar_view/calendar_view.dart';
@@ -128,7 +130,7 @@ class HomeModel {
           // print(timing);
           for (var element in timing) {
             // print(element);
-              String courseName = course.data["course_name"];
+            String courseName = course.data["course_name"];
             String roomNo = course.data["room_no"];
 
             int sHr = int.parse(element[0]);
@@ -138,18 +140,28 @@ class HomeModel {
             DateTime now = DateTime.now();
             // task is to add this event for the next 7 days accordng to week day and time
             for (int i = 0; i < 7; i++) {
-              DateTime date = DateTime(now.year, now.month, now.day).add( Duration(days: i));
+              DateTime date =
+                  DateTime(now.year, now.month, now.day).add(Duration(days: i));
               if (date.weekday == weekDay) {
-                DateTime startTime = DateTime(date.year, date.month, date.day,
-                    sHr, sMin, 0, 0, 0);
-                DateTime endTime = DateTime(date.year, date.month, date.day, eHr,
-                    eMin, 0, 0, 0);
+                DateTime startTime = DateTime(
+                    date.year, date.month, date.day, sHr, sMin, 0, 0, 0);
+                DateTime endTime = DateTime(
+                    date.year, date.month, date.day, eHr, eMin, 0, 0, 0);
                 _homeController.eventController.add(CalendarEventData(
                     title: "$courseName in $roomNo",
                     date: date,
                     startTime: startTime,
                     endTime: endTime));
+                // NotificationService().scheduleNotification(
+                //     scheduledNotificationDateTime: startTime.subtract(
+                //         const Duration(minutes: 10)),
+                //     title: "Class Reminder",
+                //     body: "$courseName in $roomNo");
+                int id = Random().nextInt(100000);
+                // print("scheduled notification for $courseName at ${startTime.subtract(const Duration(minutes: 10))}");
+                NotificationService().scheduleNotification(id, "Lecture Reminder", "$courseName in $roomNo", startTime.subtract(const Duration(minutes: 10)));
               }
+              // create local scheduled notification
             }
           }
 
