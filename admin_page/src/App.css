@@ -155,3 +155,37 @@ td {
 #demo-simple-select-helper-label{
   color: black;
 }
+.upload-container {
+  position: absolute;
+  margin-top: 10%;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%,-50%);
+}
+.dropzone {
+  width: 400px;
+  height: 250px;
+  border: 2px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 5%;
+  background-color: rgb(64, 107, 127);
+}
+.btn-primary{
+  margin-top: 20px;
+  align-items: center;
+  margin-left: 48px;
+}
+.title-font{
+  font-size: 25px;
+}
+.title{
+  color: aqua;
+  position: absolute;
+  left: 50%;
+  top: 23%;
+  transform: translate(-50%,-50%)
+  
+}
