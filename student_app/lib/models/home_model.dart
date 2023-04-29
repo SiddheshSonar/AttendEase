@@ -5,6 +5,7 @@ import 'package:attendease/controllers/home_controller.dart';
 import 'package:attendease/database/db.dart';
 import 'package:attendease/main.dart';
 import 'package:attendease/views/login_screen.dart';
+import 'package:calendar_view/calendar_view.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -24,7 +25,12 @@ class HomeModel {
         // print("stream is active");
         // _isFetching.value = true;
         _homeController.attendance = e.record?.data["attendance"];
-        submitCheck.fire();
+        try {
+          submitCheck.fire();
+        } catch (e) {
+          print(e);
+        }
+
         if (!Get.isOverlaysClosed) {
           await Future.delayed(const Duration(seconds: 2), () {
             Get.back(closeOverlays: true);
@@ -33,9 +39,11 @@ class HomeModel {
         }
         int i = 0;
         _homeController.items.clear();
+        _homeController.percentages.clear();
         _homeController.courses.forEach((key, value) {
           // print("key: $key, value: $value, attendance: ${attendance[key]}");
           // barData.add(BarData(name: key, y1: (attendance[key] != null) ? attendance[key].length : 0, y2: courses[key]));
+
           _homeController.items.add(makeGroupData(
               i++,
               (_homeController.attendance[key] != null)
@@ -66,18 +74,27 @@ class HomeModel {
   }
 
   BarChartGroupData makeGroupData(int x, int y1, int y2) {
+    _homeController.percentages.add(y1 * 100 / y2);
+    // print("x: $x, y1: $y1, y2: $y2");
+    // print("percent: ${y1 / y2}");
+
+    Color attColor = const Color(0xFF39FF14);
+    if (y1 / y2 < 0.75) {
+      attColor = const Color.fromARGB(255, 231, 80, 80);
+    }
     return BarChartGroupData(
       barsSpace: 4,
       x: x,
       barRods: [
         BarChartRodData(
           toY: y1.toDouble(),
-          color: const Color(0xFF04d9ff),
+          color: attColor,
           width: 14,
         ),
         BarChartRodData(
           toY: y2.toDouble(),
-          color: const Color(0xFF39FF14),
+          // color: const Color(0xFF39FF14),
+          color: const Color(0xFF04d9ff),
           width: 14,
         ),
       ],
@@ -92,8 +109,79 @@ class HomeModel {
   Future<void> populateUserData() async {
     await PbDb.pb
         .collection("students")
-        .getOne(user.id, expand: "courses(students).courses")
+        .getOne(user.id, expand: "courses_enrolled")
         .then((RecordModel value) {
+      // print(value.expand["courses_enrolled"]);
+
+      for (var course in value.expand["courses_enrolled"]!) {
+        // _homeController.courses[course["course_name"]] = course["lectures"];
+        // print(course);
+        // Map data = course as Map;
+        // print(course.data["tt"]);
+        Map data = course.data["tt"];
+
+        for (var key in data.keys) {
+          // print(key);
+          // print(data[key]);
+          int weekDay = int.parse(key);
+          List timing = data[key];
+          // print(timing);
+          for (var element in timing) {
+            // print(element);
+              String courseName = course.data["course_name"];
+            String roomNo = course.data["room_no"];
+
+            int sHr = int.parse(element[0]);
+            int sMin = int.parse(element[1]);
+            int eHr = int.parse(element[2]);
+            int eMin = int.parse(element[3]);
+            DateTime now = DateTime.now();
+            // task is to add this event for the next 7 days accordng to week day and time
+            for (int i = 0; i < 7; i++) {
+              DateTime date = DateTime(now.year, now.month, now.day).add( Duration(days: i));
+              if (date.weekday == weekDay) {
+                DateTime startTime = DateTime(date.year, date.month, date.day,
+                    sHr, sMin, 0, 0, 0);
+                DateTime endTime = DateTime(date.year, date.month, date.day, eHr,
+                    eMin, 0, 0, 0);
+                _homeController.eventController.add(CalendarEventData(
+                    title: "$courseName in $roomNo",
+                    date: date,
+                    startTime: startTime,
+                    endTime: endTime));
+              }
+            }
+          }
+
+          // String courseName = course.data["course_name"];
+          // String roomNo = course.data["room_no"];
+
+          // int sHr = int.parse(timing[0]);
+          // int sMin = int.parse(timing[1]);
+          // int eHr = int.parse(timing[2]);
+          // int eMin = int.parse(timing[3]);
+          // DateTime now = DateTime.now();
+          // // task is to add this event for the next 7 days accordng to week day and time
+          // for (int i = 0; i < 7; i++) {
+          //   DateTime date = DateTime(now.year, now.month, now.day).add( Duration(days: i));
+          //   if (date.weekday == weekDay) {
+          //     DateTime startTime = DateTime(date.year, date.month, date.day,
+          //         sHr, sMin, 0, 0, 0);
+          //     DateTime endTime = DateTime(date.year, date.month, date.day, eHr,
+          //         eMin, 0, 0, 0);
+          //     _homeController.eventController.add(CalendarEventData(
+          //         title: courseName,
+          //         description: roomNo,
+          //         date: date,
+          //         startTime: startTime,
+          //         endTime: endTime));
+          //   }
+          // }
+          // _homeController.courses[key] = data[key];
+        }
+      }
+      // itterate this field and add data to create calendar
+
       _homeController.attendance = value.data["attendance"];
     });
   }
@@ -114,6 +202,7 @@ class HomeModel {
 
       int i = 0;
       _homeController.items.clear();
+      _homeController.percentages.clear();
       _homeController.courses.forEach((key, value) {
         _homeController.items.add(makeGroupData(
             i++,

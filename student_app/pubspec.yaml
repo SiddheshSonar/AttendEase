@@ -30,6 +30,7 @@ environment:
 dependencies:
   animated_text_kit: ^4.2.2
   beacon_broadcast: ^0.3.1
+  calendar_view: ^1.0.3
   cupertino_icons: ^1.0.2
   fl_chart: ^0.61.0
   flutter:

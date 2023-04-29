@@ -5,10 +5,12 @@ class AtGraph extends StatefulWidget {
   final List<BarChartGroupData> items;
   final List<BarChartGroupData> showingBarGroups;
   final Map courses;
+  final List<double> percentages;
   const AtGraph(
       {required this.items,
       required this.showingBarGroups,
       required this.courses,
+      required this.percentages,
       super.key});
 
   @override
@@ -119,7 +121,7 @@ class AtGraphState extends State<AtGraph> {
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: bottomTitles,
-                reservedSize: 42,
+                reservedSize: 62,
               ),
             ),
             // leftTitles: AxisTitles(
@@ -141,27 +143,46 @@ class AtGraphState extends State<AtGraph> {
       ),
     );
   }
-  
-  Widget bottomTitles(double value, TitleMeta meta) {
-  final titles = <String>[];
-  widget.courses.forEach((key, value) {
-    titles.add(key);
-  });
-  final Widget text = Text(
-    titles[value.toInt()],
-    style: const TextStyle(
-      color: Color(0xff7589a2),
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    ),
-  );
 
-  return SideTitleWidget(
-    axisSide: meta.axisSide,
-    space: 16, //margin top
-    child: text,
-  );
-}
+  Widget bottomTitles(double value, TitleMeta meta) {
+    // also pass percentage here
+    // i have number of lectures here
+    // just need number of lectures attended
+    final titles = <String>[];
+    // print(widget.courses);
+    // print(widget.items);
+    // print(widget.showingBarGroups);
+    widget.courses.forEach((key, value) {
+      titles.add(key);
+    });
+    final Widget text = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          titles[value.toInt()],
+          style: const TextStyle(
+            color: Color(0xff7589a2),
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
+          ),
+        ),
+        Text(
+          '${widget.percentages[value.toInt()].toStringAsFixed(2)}%',
+          style: const TextStyle(
+            color: Color(0xff7589a2),
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
+          ),
+        ),
+      ],
+    );
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 12, //margin top
+      child: text,
+    );
+  }
 }
 
 // Widget bottomTitles(double value, TitleMeta meta) {

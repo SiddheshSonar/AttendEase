@@ -32,6 +32,12 @@ class _MainState extends State<Main> {
     super.dispose();
   }
 
+  // List<Widget> _home = [
+  //   // HomePage(homeController: _homeController),
+
+  // ];
+  final Duration pageAnimationDuration = const Duration(milliseconds: 300);
+  final Curve pageAnimationCurve = Curves.easeInOut;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,17 +59,29 @@ class _MainState extends State<Main> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const CircleAvatar(
-                        radius: 32,
-                        backgroundColor: Colors.black54,
-                        child: Text(
-                          'S',
-                          style: TextStyle(fontSize: 40),
-                        )),
+                    GestureDetector(
+                        child: CircleAvatar(
+                            radius: 32,
+                            backgroundColor: Colors.black54,
+                            child: Text(
+                              // 'S',
+                              // '${PbDb.pb.authStore.user!.name![0]}',
+                              user.name[0],
+                              style: const TextStyle(fontSize: 40),
+                            )),
+                        onTap: () {
+                          _homeController.homePageController.animateToPage(0,
+                              duration: pageAnimationDuration,
+                              curve: pageAnimationCurve);
+                        }),
                     IconButton(
                         splashRadius: 32,
-                        onPressed: () {},
-                        icon: const Icon(Icons.search)),
+                        onPressed: () {
+                          _homeController.homePageController.animateToPage(1,
+                              duration: pageAnimationDuration,
+                              curve: pageAnimationCurve);
+                        },
+                        icon: const Icon(Icons.calendar_view_day_rounded)),
                     IconButton(
                         splashRadius: 32,
                         onPressed: () {},
@@ -88,44 +106,19 @@ class _MainState extends State<Main> {
           ),
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Hi!, ${user.name}',
-                style: const TextStyle(fontSize: 32),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'UID: ${user.uid}',
-              ),
-              const SizedBox(height: 5),
-              Text(
-                'Division: ${user.subdivision}',
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  attendValidate();
-                },
-                child: const Text('Submit Attendance'),
-              ),
-              SizedBox(
-                height: 300,
-                child: Obx(() {
-                  return (!_homeController.isFetching.value)
-                      ? AtGraph(
-                          key: _homeController.graphKey,
-                          items: _homeController.items,
-                          showingBarGroups: _homeController.showingBarGroups,
-                          courses: _homeController.courses)
-                      : const Center(child: CircularProgressIndicator());
-                }),
-              ),
-            ],
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => attendValidate(),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
         ),
+        tooltip: "Submit Attendance",
+        child: const Icon(Icons.fingerprint),
+      ),
+
+      // body: HomePage(homeController: _homeController),
+      body: PageView(
+        children: _homeController.home,
+        controller: _homeController.homePageController,
       ),
       // ),
     );
@@ -203,5 +196,58 @@ class _MainState extends State<Main> {
       return Get.snackbar('Error', 'Authentication Failed',
           snackPosition: SnackPosition.BOTTOM);
     }
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({
+    super.key,
+    required HomeController homeController,
+  }) : _homeController = homeController;
+
+  final HomeController _homeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Hi!, ${user.name}',
+            style: const TextStyle(fontSize: 32),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'UID: ${user.uid}',
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Division: ${user.subdivision}',
+          ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     attendValidate();
+          //   },
+          //   child: const Text('Submit Attendance'),
+          // ),
+          SizedBox(
+            height: 350,
+            child: Obx(() {
+              return (!_homeController.isFetching.value)
+                  ? AtGraph(
+                      key: _homeController.graphKey,
+                      items: _homeController.items,
+                      showingBarGroups: _homeController.showingBarGroups,
+                      courses: _homeController.courses,
+                      percentages: _homeController.percentages,
+                    )
+                  : const Center(child: CircularProgressIndicator());
+            }),
+          ),
+        ],
+      ),
+    );
   }
 }
