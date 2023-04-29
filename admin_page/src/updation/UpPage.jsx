@@ -59,7 +59,7 @@ const UpPage = ({ op, record, course }) => {
             if(!student.hasOwnProperty(selectedCourse)) {
                 student[selectedCourse] = []
             }
-            console.log(student[selectedCourse])
+            // console.log(student[selectedCourse])
             console.log("Data Added")
             student[selectedCourse].push(newDate)
             console.log(student[selectedCourse])

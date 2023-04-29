@@ -60,7 +60,7 @@ const StudTable = () => {
                   <th>UID</th>
                   <th>Name</th>
                   <th>Division</th>
-                  <th className="atbt">Attendance</th>
+                  <th className="atbt" style={{ width: "200px" }}>Attendance</th>
                 </tr>
               </thead>
               <tbody>
