@@ -36,6 +36,13 @@ function Home() {
     setLoading(false);
   };
 
+  async function navigateToPrint() {
+    setLoading(true);
+    await delay(1000);
+    navigate('/download');
+    setLoading(false);
+  };
+
 
   if (pb.authStore.isValid) {
     return (
@@ -47,6 +54,7 @@ function Home() {
             <button className="btn btn-primary" onClick={navigateToStudents}>VIEW ATTENDANCE</button>
             <button className="btn btn-primary" onClick={navigateToUpdate}>UPDATE ATTENDANCE</button>
             <button className="btn btn-primary" onClick={navigateToUpload}>ADD ATTENDANCE SHEET</button>
+            <button className="btn btn-primary" onClick={navigateToPrint}>PRINT ATTENDANCE LIST</button>
           </div>
           <div className="footer">
             <Footer />

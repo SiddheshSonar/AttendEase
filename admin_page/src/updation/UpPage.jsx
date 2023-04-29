@@ -23,7 +23,10 @@ const UpPage = ({ op, record, course }) => {
     const [variant, setVariant] = useState(undefined);
     const [changes, setChanges] = useState(undefined);
     const [newData, setNewData] = useState(record);
-    const courses = (Object.keys(record.attendance))
+    // const courses = (Object.keys(record.attendance))
+//     const courses = course.map((course, index) =>
+//     <MenuItem key={index} value={course}>{course}</MenuItem>
+// )
 
     const handleAccept = (newDate) => {
         setDate(newDate);
@@ -70,6 +73,11 @@ const UpPage = ({ op, record, course }) => {
         const student = record.attendance
         if (op === "CONFIRM ADDITION" && date && selectedCourse) {
             setVariant('soft')
+            console.log(student[selectedCourse])
+            if(!student.hasOwnProperty(selectedCourse)) {
+                student[selectedCourse] = []
+            }
+            console.log(student[selectedCourse])
             console.log("Data Added")
             student[selectedCourse].push(newDate)
             console.log(student[selectedCourse])
@@ -128,8 +136,8 @@ const UpPage = ({ op, record, course }) => {
         }
     }
 
-    const courseNames = courses.map((course, index) =>
-        <MenuItem key={index} value={course}>{course}</MenuItem>
+    const courseNames = course.map((course, index) =>
+        <MenuItem key={index} value={course.course_name}>{course.course_name}</MenuItem>
     )
 
     return (

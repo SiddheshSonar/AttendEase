@@ -53,13 +53,13 @@ const Upload = () => {
         </div>
         <input type="file" onChange={handleFile} accept=".csv" style={{ display: "none" }} />
         <button
-          className="btn btn-primary"
+          className="up-btn btn btn-primary"
           onClick={() => document.querySelector('input[type="file"]').click()}
         >
           SELECT FILE
         </button>
         <button
-          className="btn btn-primary"
+          className="up-btn btn btn-primary"
           disabled={!file}
           onClick={handleUpload}
         >
