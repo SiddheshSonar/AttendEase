@@ -56,8 +56,6 @@ const Chart = (props) => {
         return count / totalLecs[index];
       });
 
-      
-
       return {
         labels: labels,
         datasets: [
