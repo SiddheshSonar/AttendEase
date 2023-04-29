@@ -70,8 +70,10 @@ class HomeController extends GetxController {
 // androidAllowWhileIdle: true,
 // uiLocalNotificationDateInterpretation:
 //     UILocalNotificationDateInterpretation.absoluteTime);
-    await homeModel.populateUserData();
     await homeModel.populateUserCourses();
+    await homeModel.populateUserData();
+    // reversed order
+    // await homeModel.populateUserCourses();
 
     // print('attendance: $attendance');
     // isFetching.value = false;

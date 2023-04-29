@@ -30,7 +30,7 @@ class HomeModel {
         try {
           submitCheck.fire();
         } catch (e) {
-          print(e);
+          // print(e);
         }
 
         if (!Get.isOverlaysClosed) {
@@ -114,122 +114,123 @@ class HomeModel {
         .getOne(user.id, expand: "courses_enrolled")
         .then((RecordModel value) {
       // print(value.expand["courses_enrolled"]);
-
-      for (var course in value.expand["courses_enrolled"]!) {
-        // _homeController.courses[course["course_name"]] = course["lectures"];
-        // print(course);
-        // Map data = course as Map;
-        // print(course.data["tt"]);
-        Map data = course.data["tt"];
-
-        for (var key in data.keys) {
-          // print(key);
-          // print(data[key]);
-          int weekDay = int.parse(key);
-          List timing = data[key];
-          // print(timing);
-          for (var element in timing) {
-            // print(element);
-            String courseName = course.data["course_name"];
-            String roomNo = course.data["room_no"];
-
-            int sHr = int.parse(element[0]);
-            int sMin = int.parse(element[1]);
-            int eHr = int.parse(element[2]);
-            int eMin = int.parse(element[3]);
-            DateTime now = DateTime.now();
-            // task is to add this event for the next 7 days accordng to week day and time
-            for (int i = 0; i < 7; i++) {
-              DateTime date =
-                  DateTime(now.year, now.month, now.day).add(Duration(days: i));
-              if (date.weekday == weekDay) {
-                DateTime startTime = DateTime(
-                    date.year, date.month, date.day, sHr, sMin, 0, 0, 0);
-                DateTime endTime = DateTime(
-                    date.year, date.month, date.day, eHr, eMin, 0, 0, 0);
-                _homeController.eventController.add(CalendarEventData(
-                    title: "$courseName in $roomNo",
-                    date: date,
-                    startTime: startTime,
-                    endTime: endTime));
-                // NotificationService().scheduleNotification(
-                //     scheduledNotificationDateTime: startTime.subtract(
-                //         const Duration(minutes: 10)),
-                //     title: "Class Reminder",
-                //     body: "$courseName in $roomNo");
-                int id = Random().nextInt(100000);
-                // print("scheduled notification for $courseName at ${startTime.subtract(const Duration(minutes: 10))}");
-                NotificationService().scheduleNotification(id, "Lecture Reminder", "$courseName in $roomNo", startTime.subtract(const Duration(minutes: 10)));
-              }
-              // create local scheduled notification
-            }
-          }
-
-          // String courseName = course.data["course_name"];
-          // String roomNo = course.data["room_no"];
-
-          // int sHr = int.parse(timing[0]);
-          // int sMin = int.parse(timing[1]);
-          // int eHr = int.parse(timing[2]);
-          // int eMin = int.parse(timing[3]);
-          // DateTime now = DateTime.now();
-          // // task is to add this event for the next 7 days accordng to week day and time
-          // for (int i = 0; i < 7; i++) {
-          //   DateTime date = DateTime(now.year, now.month, now.day).add( Duration(days: i));
-          //   if (date.weekday == weekDay) {
-          //     DateTime startTime = DateTime(date.year, date.month, date.day,
-          //         sHr, sMin, 0, 0, 0);
-          //     DateTime endTime = DateTime(date.year, date.month, date.day, eHr,
-          //         eMin, 0, 0, 0);
-          //     _homeController.eventController.add(CalendarEventData(
-          //         title: courseName,
-          //         description: roomNo,
-          //         date: date,
-          //         startTime: startTime,
-          //         endTime: endTime));
-          //   }
-          // }
-          // _homeController.courses[key] = data[key];
-        }
-      }
       // itterate this field and add data to create calendar
 
       _homeController.attendance = value.data["attendance"];
+      // print(_homeController.attendance);
+      createNotificationQueue(value);
+      populateGraph();
+      _homeController.isFetching.value = false;
     });
   }
 
   Future<void> populateUserCourses() async {
     await PbDb.pb.collection("courses").getFullList().then((value) {
-      // print(value);
       for (RecordModel element in value) {
         if (element.data["students_enrolled"].contains(user.id)) {
-          // print(element.data["course_name"]);
-          // print(element.data["lectures"]);
           _homeController.courses[element.data["course_name"]] =
               element.data["lectures"];
         }
       }
-      // print("courses: ${_homeController.courses}");
-      // print("attendance: ${_homeController.attendance}");
-
-      int i = 0;
-      _homeController.items.clear();
-      _homeController.percentages.clear();
-      _homeController.courses.forEach((key, value) {
-        _homeController.items.add(makeGroupData(
-            i++,
-            (_homeController.attendance[key] != null)
-                ? _homeController.attendance[key].length
-                : 0,
-            _homeController.courses[key]));
-      });
-      //rawBarGroups = items;
-      _homeController.showingBarGroups = _homeController.items;
-      // print("test2");
-      // Future.delayed(const Duration(milliseconds: 500), () {
-      //   // _homeController.graphKey.currentState?.update();
-      _homeController.isFetching.value = false;
-      // });
     });
+  }
+
+  void populateGraph() {
+    int i = 0;
+    _homeController.items.clear();
+    _homeController.percentages.clear();
+    _homeController.courses.forEach((key, value) {
+      _homeController.items.add(makeGroupData(
+          i++,
+          (_homeController.attendance[key] != null)
+              ? _homeController.attendance[key].length
+              : 0,
+          _homeController.courses[key]));
+    });
+
+    _homeController.showingBarGroups = _homeController.items;
+  }
+
+  Future<void> createNotificationQueue(RecordModel value) async {
+    NotificationService()
+        .cancelAllScheduled(); // cancels all previous scheduled notifications
+    for (var course in value.expand["courses_enrolled"]!) {
+      // _homeController.courses[course["course_name"]] = course["lectures"];
+      // print(course);
+      // Map data = course as Map;
+      // print(course.data["tt"]);
+      Map data = course.data["tt"];
+
+      for (var key in data.keys) {
+        // print(key);
+        int weekDay = int.parse(key);
+        List timing = data[key];
+        // print(timing);
+        for (var element in timing) {
+          // print(element);
+          String courseName = course.data["course_name"];
+          String roomNo = course.data["room_no"];
+
+          int sHr = int.parse(element[0]);
+          int sMin = int.parse(element[1]);
+          int eHr = int.parse(element[2]);
+          int eMin = int.parse(element[3]);
+          DateTime now = DateTime.now();
+          // task is to add this event for the next 7 days accordng to week day and time
+
+          for (int i = 0; i < 7; i++) {
+            DateTime date =
+                DateTime(now.year, now.month, now.day).add(Duration(days: i));
+            if (date.weekday == weekDay) {
+              DateTime startTime =
+                  DateTime(date.year, date.month, date.day, sHr, sMin, 0, 0, 0);
+              DateTime endTime =
+                  DateTime(date.year, date.month, date.day, eHr, eMin, 0, 0, 0);
+              _homeController.eventController.add(CalendarEventData(
+                  title: "$courseName in $roomNo",
+                  date: date,
+                  startTime: startTime,
+                  endTime: endTime));
+
+              // NotificationService().scheduleNotification(
+              //     scheduledNotificationDateTime: startTime.subtract(
+              //         const Duration(minutes: 10)),
+              //     title: "Class Reminder",
+              //     body: "$courseName in $roomNo");
+              // find course name in _homeController.attendance and get the number of lectures
+              int id = Random().nextInt(100000);
+              if (_homeController.attendance[courseName] != null) {
+                int lecturesAttended = _homeController
+                    .attendance[courseName]!.length; // number of lectures
+                // print("$courseName has ${_homeController.courses['$courseName']} lectures of which $lecturesAttended are attended");
+                // show user notification indicating that if the lecture isn't attended then what will be their attendance percentage
+                // double currentAttendPercentage = lecturesAttended * 100 /
+                //     _homeController.courses[courseName]!;
+                double newAttendPercentage = (lecturesAttended + 1) *
+                        100 /
+                        _homeController.courses[courseName]! +
+                    1;
+                double newNotAttendPercentage = (lecturesAttended) *
+                    100 /
+                    (_homeController.courses[courseName]! + 1);
+                NotificationService().scheduleNotification(
+                    id,
+                    "$courseName ${startTime.hour}:${startTime.minute} - ${endTime.hour}:${endTime.minute}",
+                    "Attend: ${newAttendPercentage.toStringAsFixed(2)}% | Bunk: ${newNotAttendPercentage.toStringAsFixed(2)}%",
+                    startTime.subtract(const Duration(minutes: 10)));
+              } else {
+                NotificationService().scheduleNotification(
+                    id,
+                    "Lecture Reminder",
+                    "$courseName in $roomNo",
+                    startTime.subtract(const Duration(minutes: 10)));
+              }
+              // print("scheduled notification for $courseName at ${startTime.subtract(const Duration(minutes: 10))}");
+            }
+            // create local scheduled notification
+          }
+        }
+      }
+    }
   }
 }

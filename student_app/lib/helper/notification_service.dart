@@ -19,10 +19,11 @@ class NotificationService {
 
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-    await notificationsPlugin.initialize(initializationSettings,
-        // onDidReceiveNotificationResponse:
-        //     (NotificationResponse notificationResponse) async {}
-            );
+    await notificationsPlugin.initialize(
+      initializationSettings,
+      // onDidReceiveNotificationResponse:
+      //     (NotificationResponse notificationResponse) async {}
+    );
   }
 
   notificationDetails() {
@@ -53,13 +54,12 @@ class NotificationService {
   //       ),
   //       await notificationDetails(),
   //       // androidAllowWhileIdle: true,
-        
+
   //       // androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
   //       uiLocalNotificationDateInterpretation:
   //           UILocalNotificationDateInterpretation.absoluteTime);
   // }
   Future<void> scheduleNotification(
-
       int id, String title, String body, DateTime dateTime) async {
     await notificationsPlugin.zonedSchedule(
         id,
@@ -69,10 +69,11 @@ class NotificationService {
           dateTime,
           tz.local,
         ),
-        
-         NotificationDetails(
+        NotificationDetails(
             android: AndroidNotificationDetails(id.toString(), 'Main',
-                importance: Importance.max, priority: Priority.max, icon: '@mipmap/ic_launcher'),
+                importance: Importance.max,
+                priority: Priority.max,
+                icon: '@mipmap/ic_launcher'),
             iOS: DarwinNotificationDetails(
               sound: "default.wav",
               presentAlert: true,
@@ -80,6 +81,12 @@ class NotificationService {
               presentSound: true,
             )),
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime, androidAllowWhileIdle: true, matchDateTimeComponents: DateTimeComponents.time);
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  Future<void> cancelAllScheduled() async {
+    await notificationsPlugin.cancelAll();
   }
 }
