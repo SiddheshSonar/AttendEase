@@ -47,6 +47,13 @@ function Home() {
     setLoading(false);
   };
 
+  async function navigateToQR() {
+    setLoading(true);
+    await delay(1000);
+    navigate('/qrgen8r');
+    setLoading(false);
+  };
+
 
   if (pb.authStore.isValid) {
     return (
@@ -60,6 +67,7 @@ function Home() {
             <button className="home-btn btn btn-primary" onClick={navigateToUpdate}><UpdateIcon style={{marginBottom:"3px", marginRight: "5px"}}/>UPDATE ATTENDANCE</button>
             <button className="home-btn btn btn-primary" onClick={navigateToUpload}><NoteAddIcon style={{marginBottom:"3px", marginRight: "5px"}}/>ADD ATTENDANCE SHEET</button>
             <button className="home-btn btn btn-primary" onClick={navigateToPrint}><PrintIcon style={{marginBottom:"3px", marginRight: "5px"}}/>PRINT ATTENDANCE LIST</button>
+            <button className="home-btn btn btn-primary" onClick={navigateToQR}><PrintIcon style={{marginBottom:"3px", marginRight: "5px"}}/>QR ATTENDANCE</button>
             </div>
           </div>
           <div className="footer">

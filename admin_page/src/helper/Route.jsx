@@ -6,6 +6,7 @@ import Students from "../Students";
 import Update from "../updation/Update";
 import Upload from "../upload/Upload";
 import Download from "../print/Download";
+import QrCode from "../qr_code/QrCode";
 import InitialTransition from "../login_page/Loading";
 
 function PageRoute() {
@@ -20,6 +21,7 @@ function PageRoute() {
             <Route path="/update" element={<Update />}/>
             <Route path="/upload" element={<Upload />}/>
             <Route path="/download" element={<Download />}/>
+            <Route path="/qrgen8r" element={<QrCode />}/>
         </Routes>
     )
 }
