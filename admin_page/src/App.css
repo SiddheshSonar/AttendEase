@@ -57,6 +57,11 @@ td {
   align-items: center;
 }
 
+.ic {
+  margin-bottom: 2px;
+  padding-bottom: 1px;
+}
+
 .footer {
   position: fixed;
   bottom: 35%;

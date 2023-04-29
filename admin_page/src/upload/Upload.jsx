@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import NavB from "../Navbar";
+import FolderIcon from '@mui/icons-material/Folder';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 const Upload = () => {
   const [file, setFile] = useState(null);
@@ -38,7 +42,7 @@ const Upload = () => {
     <div className="up-main">
       <NavB />
       <div className="up-box">
-      <h1 className="upload-title">Upload Your File</h1>
+      <h1 className="upload-title"><UploadFileIcon style={{fontSize:"38px",marginBottom:"6px",marginRight:"3px"}}/>Upload Your File</h1>
       <div className="upload-container">
         <div
           className="dropzone"
@@ -48,7 +52,7 @@ const Upload = () => {
           {file ? (
             <p className="title-font">{file.name}</p>
           ) : (
-            <p>Drag and drop a file here or click to select a file.</p>
+            <p><AttachFileIcon style={{marginBottom: "3px"}}/>Drag and drop a file here or click to select a file.</p>
           )}
         </div>
         <div className="up-btn-holder">
@@ -56,14 +60,14 @@ const Upload = () => {
         <button
           className="up-btn btn btn-primary"
           onClick={() => document.querySelector('input[type="file"]').click()}
-        >
+        ><FolderIcon style={{marginRight:"4px",marginBottom:"3px"}}/>
           SELECT FILE
         </button>
         <button
           className="up-btn btn btn-primary"
           disabled={!file}
           onClick={handleUpload}
-        >
+        ><FileUploadIcon style={{marginRight:"4px",marginBottom:"3px"}}/>
           UPLOAD FILE
         </button>
         {uploadStatus && <p>{uploadStatus}</p>}

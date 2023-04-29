@@ -3,6 +3,8 @@ import Table from "react-bootstrap/Table";
 import "../App.css";
 import { pb } from "../login_page/Login";
 import UpPage from "../updation/UpPage";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const StudTable = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -73,13 +75,13 @@ const StudTable = () => {
                       <button
                         onClick={() => handleButtonClick(record,"CONFIRM ADDITION")}
                         className="btn btn-primary"
-                      >
+                      ><AddCircleIcon style={{marginRight:"4px",marginBottom: "3px"}}/>
                         ADD
                       </button>
                       <button
                         onClick={() => handleButtonClick(record,"CONFIRM DELETION")}
-                        className="btn btn-primary"
-                      >
+                        className="btn btn-danger"
+                      ><RemoveCircleIcon style={{marginRight:"4px",marginBottom: "3px"}}/>
                         DELETE
                       </button>
                     </td>

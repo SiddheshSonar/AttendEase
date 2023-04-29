@@ -14,6 +14,8 @@ import ModalClose from '@mui/joy/ModalClose';
 import ModalDialog from '@mui/joy/ModalDialog';
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import Typography from '@mui/joy/Typography';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { pb } from '../login_page/Login';
 
 const UpPage = ({ op, record, course }) => {
@@ -168,7 +170,7 @@ const UpPage = ({ op, record, course }) => {
 
 
             </div>}
-            <button className='main-btn btn btn-primary' onClick={() => setOpen(true)}>{op}</button>
+            <button className={op === "CONFIRM ADDITION" ? "btn btn-success" : "btn btn-danger"} onClick={() => setOpen(true)}>{op} {op === "CONFIRM ADDITION" ? <ThumbUpAltIcon className='ic'/> : <DeleteIcon className='ic'/>}</button>
             <Modal open={open} onClose={() => setOpen(false)}>
                 <ModalDialog
                     variant="outlined"

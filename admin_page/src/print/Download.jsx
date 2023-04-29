@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavB from '../Navbar';
 import PrintTable from '../table/PrintTable';
 import { pb } from '../login_page/Login';
-
+import SchoolIcon from '@mui/icons-material/School';
 
 const Download = () => {
   const [student, setStudent] = useState({});
@@ -37,7 +37,7 @@ const Download = () => {
               className='pt-btn btn btn-primary'
               onClick={() => handleDivisionClick(div)}
             >
-              {`DIVISON ${div}`}
+              <SchoolIcon style={{marginRight:"5px",marginBottom:"4px"}}/>{`DIVISON ${div}`}
             </button>
           ))}
         </div>

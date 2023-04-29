@@ -3,6 +3,8 @@ import Table from "react-bootstrap/Table";
 import Chart from "../chart/Chart";
 import "../App.css";
 import { pb } from "../login_page/Login";
+import BarChartIcon from '@mui/icons-material/BarChart';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 const StudTable = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +39,7 @@ const StudTable = () => {
             {selectedRecord && <Chart record={selectedRecord} />}
           </div>
           <div className="search-table">
-          <h2 className="table-head">Search Students By UID</h2>
+          <h2 className="table-head"><PersonSearchIcon style={{fontSize:"40px",marginBottom:"10px"}}/>Search Students By UID</h2>
             <input
               className="search-bar"
               type="text"
@@ -66,7 +68,7 @@ const StudTable = () => {
                         onClick={() => setSelectedRecord(record)}
                         className="btn btn-primary"
                       >
-                        View Attendance
+                        <BarChartIcon style={{marginBottom:"4px"}}/>View Attendance
                       </button>
                     </td>
                   </tr>
