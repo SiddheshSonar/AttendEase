@@ -23,10 +23,6 @@ const UpPage = ({ op, record, course }) => {
     const [variant, setVariant] = useState(undefined);
     const [changes, setChanges] = useState(undefined);
     const [newData, setNewData] = useState(record);
-    // const courses = (Object.keys(record.attendance))
-//     const courses = course.map((course, index) =>
-//     <MenuItem key={index} value={course}>{course}</MenuItem>
-// )
 
     const handleAccept = (newDate) => {
         setDate(newDate);
@@ -39,20 +35,6 @@ const UpPage = ({ op, record, course }) => {
     const handleChange = (event) => {
         setSelectedCourse(event.target.value);
     };
-
-    // useEffect(() => {
-    //     async function getCourses() {
-    //         try {
-    //             const course_info = await pb.collection('courses').getOne(course.id, {
-    //                 expand: 'students_enrolled.username',
-    //             });
-    //             console.log(course_info);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     getCourses()
-    // }, [])
 
     async function updateData(data) {
         try {
