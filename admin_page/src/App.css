@@ -148,6 +148,14 @@ td {
   transform: translate(-50%,-50%);
 }
 
+.info-title {
+  color: gray;
+}
+
+#demo-simple-select-helper-label{
+  color: black;
+}
+
 .upload-container {
   
 }
