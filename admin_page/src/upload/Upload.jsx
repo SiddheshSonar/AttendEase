@@ -9,10 +9,11 @@ const Upload = () => {
     }
 
     function handleUpload() {
-        setLoading(true);
+        //setLoading(true);
         const formData = new FormData();
+        //console.log(file);
         formData.append('file', file);
-        fetch('http://localhost:5000/upload', {
+        fetch('http://localhost:3000/upload', {
             method: 'POST',
             body: formData
         })
@@ -20,16 +21,16 @@ const Upload = () => {
             .then(data => console.log(data))
             .catch(error => console.error(error))
             .finally(() => {
-                setLoading(false);
+                //setLoading(false);
             });
     }
 
     return (
         <div>
-            <NavB/>
+            <NavB />
             <div className='upload-container'>
-            <input className="" type="file" onChange={handleFile} />
-            <button className="btn btn-primary" onClick={handleUpload}>UPLOAD FILE</button>
+                <input className="" type="file" onChange={handleFile} />
+                <button className="btn btn-primary" onClick={handleUpload}>UPLOAD FILE</button>
             </div>
         </div>
     );
