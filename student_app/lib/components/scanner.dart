@@ -1,4 +1,5 @@
 import 'package:attendease/database/db.dart';
+import 'package:attendease/views/home.dart';
 import 'package:attendease/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,6 +46,10 @@ class _ScanQRState extends State<ScanQR> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+        backgroundColor: Colors.blueGrey.withOpacity(0.4),
         onPressed: () {
           _isScanning.value = !_isScanning.value;
           if (_isScanning.value) {
@@ -91,7 +96,12 @@ class _ScanQRState extends State<ScanQR> {
                 // }
                 if (status) {
                   if (!mounted) return;
-                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return const Main();
+                      }),
+                      (route) => false);
                 }
               }
             }),

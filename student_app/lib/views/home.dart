@@ -1,23 +1,17 @@
 import 'dart:ui';
-
 import 'package:attendease/components/attendance_graph.dart';
 import 'package:attendease/components/scanner.dart';
 import 'package:attendease/controllers/home_controller.dart';
 import 'package:attendease/database/db.dart';
 import 'package:attendease/main.dart';
+import 'package:attendease/pages/event_cal.dart';
 import 'package:attendease/views/login_screen.dart';
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/local_auth.dart';
-
-//move to controller
-// Map attendance = {};
-// Map courses = {};
-//move to controller
-
-// GlobalKey<AtGraphState> graphKey = GlobalKey<AtGraphState>();
 
 class Main extends StatefulWidget {
   const Main({super.key});
@@ -27,7 +21,6 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  //final RxBool _isFetching = true.obs;
   final HomeController _homeController = Get.put(HomeController());
 
   @override
@@ -36,12 +29,9 @@ class _MainState extends State<Main> {
     super.dispose();
   }
 
-  // List<Widget> _home = [
-  //   // HomePage(homeController: _homeController),
-
-  // ];
   final Duration pageAnimationDuration = const Duration(milliseconds: 300);
   final Curve pageAnimationCurve = Curves.easeInOut;
+  RxInt _currentPage = 0.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,85 +53,102 @@ class _MainState extends State<Main> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                        child: CircleAvatar(
-                            radius: 32,
-                            backgroundColor: Colors.black54,
-                            child: Text(
-                              // 'S',
-                              // '${PbDb.pb.authStore.user!.name![0]}',
-                              user.name[0],
-                              style: const TextStyle(fontSize: 40),
-                            )),
-                        onTap: () {
-                          _homeController.homePageController.animateToPage(0,
-                              duration: pageAnimationDuration,
-                              curve: pageAnimationCurve);
-                        }),
-                    IconButton(
+                    GestureDetector(child: Obx(() {
+                      return CircleAvatar(
+                          radius: 32,
+                          backgroundColor: _currentPage.value == 0
+                              ? Colors.black
+                              : Colors.transparent,
+                          child: Text(
+                            user.name[0],
+                            style: const TextStyle(fontSize: 40),
+                          ));
+                    }), onTap: () {
+                      _currentPage.value = 0;
+                      _homeController.homePageController.animateToPage(0,
+                          duration: pageAnimationDuration,
+                          curve: pageAnimationCurve);
+                    }),
+                    Obx(() {
+                      return CircleAvatar(
+                        radius: 32,
+                        backgroundColor: _currentPage.value == 1
+                            ? Colors.black
+                            : Colors.transparent,
+                        child: IconButton(
+                            splashRadius: 32,
+                            onPressed: () {
+                              _currentPage.value = 1;
+                              _homeController.homePageController.animateToPage(
+                                  1,
+                                  duration: pageAnimationDuration,
+                                  curve: pageAnimationCurve);
+                            },
+                            icon: const Icon(Icons.event_available_rounded)),
+                      );
+                    }),
+                    Obx(() {
+                      return CircleAvatar(
+                        radius: 32,
+                        backgroundColor: _currentPage.value == 2
+                            ? Colors.black
+                            : Colors.transparent,
+                        child: IconButton(
+                            splashRadius: 32,
+                            onPressed: () {
+                              _currentPage.value = 2;
+                              _homeController.homePageController.animateToPage(
+                                  2,
+                                  duration: pageAnimationDuration,
+                                  curve: pageAnimationCurve);
+                            },
+                            icon: const Icon(Icons.notes_rounded)),
+                      );
+                    }),
+                    CircleAvatar(
+                      radius: 32,
+                      backgroundColor: Colors.transparent,
+                      child: IconButton(
                         splashRadius: 32,
+                        icon: const Icon(Icons.logout_rounded),
                         onPressed: () {
-                          _homeController.homePageController.animateToPage(1,
-                              duration: pageAnimationDuration,
-                              curve: pageAnimationCurve);
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: AlertDialog(
+                                    backgroundColor:
+                                        Colors.cyan.withOpacity(0.125),
+                                    title: const Text('Confirm Logout'),
+                                    content: const Text(
+                                        'Are you sure you want to logout?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('Cancel')),
+                                      TextButton(
+                                          onPressed: () {
+                                            // logout
+                                            PbDb.pb.authStore.clear();
+                                            final box = GetStorage();
+                                            box.erase();
+                                            Navigator.pushAndRemoveUntil(
+                                                context, MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const Login();
+                                            }), (r) => false);
+                                          },
+                                          child: const Text('Logout')),
+                                    ],
+                                  ),
+                                );
+                              });
                         },
-                        icon: const Icon(Icons.calendar_view_day_rounded)),
-                    IconButton(
-                        splashRadius: 32,
-                        // iconSize: 50,
-                        onPressed: () {
-                          _homeController.homePageController.animateToPage(2,
-                              duration: pageAnimationDuration,
-                              curve: pageAnimationCurve);
-                        },
-                        icon: const Icon(Icons.notes_rounded)),
-                    IconButton(
-                      splashRadius: 32,
-                      icon: const Icon(Icons.logout_rounded),
-                      onPressed: () {
-                        // show a dialog to confirm logout
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                                child: AlertDialog(
-                                  backgroundColor: Colors.cyan.withOpacity(0.1),
-                                  title: const Text('Confirm Logout'),
-                                  content: const Text(
-                                      'Are you sure you want to logout?'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('Cancel')),
-                                    TextButton(
-                                        onPressed: () {
-                                          // logout
-                                          PbDb.pb.authStore.clear();
-                                          final box = GetStorage();
-                                          box.erase();
-                                          Navigator.pushAndRemoveUntil(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return const Login();
-                                          }), (r) => false);
-                                        },
-                                        child: const Text('Logout')),
-                                  ],
-                                ),
-                              );
-                            });
-                        // PbDb.pb.authStore.clear();
-                        // final box = GetStorage();
-                        // box.erase();
-                        // Navigator.pushAndRemoveUntil(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const Login();
-                        // }), (r) => false);
-                      },
+                      ),
                     ),
                   ],
                 ),
@@ -150,21 +157,7 @@ class _MainState extends State<Main> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-
-      //   onPressed: () => attendValidate(),
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.circular(32),
-      //   ),
-      //   tooltip: "Submit Attendance",
-      //   backgroundColor: Colors.blueGrey.withOpacity(0.3),
-      //   child: const Icon(
-      //     Icons.fingerprint,
-      //     size: 36,
-      //   ),
-      // ),
       floatingActionButton: SpeedDial(
-        // implement above feature along with an extra button with qr as icon
         backgroundColor: Colors.blueGrey.withOpacity(0.3),
         overlayColor: Colors.black.withOpacity(0.5),
         overlayOpacity: 0.5,
@@ -178,8 +171,6 @@ class _MainState extends State<Main> {
               backgroundColor: Colors.blueGrey.withOpacity(0.3),
               label: 'Scan QR',
               onTap: () {
-                // scan qr
-                // _homeController.scanQR();
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const ScanQR();
                 }));
@@ -196,13 +187,14 @@ class _MainState extends State<Main> {
                 attendValidate();
               }),
         ],
-        // implement above feature along with an extra button with qr as icon
         child: const Icon(Icons.bolt),
       ),
-
-      // body: HomePage(homeController: _homeController),
       body: PageView(
         controller: _homeController.homePageController,
+        onPageChanged: (value) {
+          _currentPage.value = value;
+        },
+        physics: const BouncingScrollPhysics(),
         children: _homeController.home,
       ),
       // ),
@@ -211,31 +203,6 @@ class _MainState extends State<Main> {
 
   Future<bool> _checkBiometric() async {
     final LocalAuthentication auth = LocalAuthentication();
-    // bool canCheckBiometrics = false;
-    // try {
-    //   canCheckBiometrics = await auth.canCheckBiometrics;
-    // } catch (e) {
-    //   // print("error biome trics $e");
-    // }
-
-    // print("biometric is available: $canCheckBiometrics");
-
-    // List<BiometricType> availableBiometrics = [];
-    // try {
-    //   availableBiometrics = await auth.getAvailableBiometrics();
-    // } catch (e) {
-    //   // print("error enumerate biometrics $e");
-    // }
-
-    // print("following biometrics are available");
-    // if (availableBiometrics.isNotEmpty) {
-    //   for (var ab in availableBiometrics) {
-    //     // print("\ttech: $ab");
-    //   }
-    // } else {
-    //   // print("no biometrics are available");
-    // }
-
     bool authenticated = false;
     try {
       authenticated = await auth.authenticate(
@@ -243,23 +210,8 @@ class _MainState extends State<Main> {
           options: const AuthenticationOptions(
             biometricOnly: true,
             stickyAuth: true,
-          )
-          // useErrorDialogs: true,
-          // stickyAuth: false,
-          // androidAuthStrings:
-          //     AndroidAuthMessages(signInTitle: "Login to HomePage")
-
-          );
-      // authenticated = true;
-      // return true;
-    } catch (e) {
-      // print("error using biometric auth: $e");
-    }
-    // setState(() {
-    //   isAuth = authenticated ? true : false;
-    // });
-
-    // print("authenticated: $authenticated");
+          ));
+    } catch (e) {}
     return authenticated;
   }
 
@@ -331,8 +283,143 @@ class HomePage extends StatelessWidget {
                   : const Center(child: CircularProgressIndicator());
             }),
           ),
+          // TODO: event list
+          // implement event list with dummy data
+          const EventsWidget()
         ],
       ),
     );
   }
+}
+
+List dummyData = [
+  {
+    'course': 'DAA',
+    'event': 'Assignment 1',
+    'desc':
+        "XYZ should be done in C or JAVA, please submit the same on Moodle.",
+    'endDate': '2023-04-30T11:45', //in iso format
+    'createdAt': '2023-04-25T00:00',
+  },
+  {
+    'course': 'OS',
+    'event': 'ISE 2',
+    'desc':
+        "Exam will consist of 2 parts, 1st part will be MCQs and 2nd will be coding. Please prepare accordingly.\nSyllabus: Module 1, 2 & 3",
+    'endDate': '2023-04-30T11:45', //in iso format
+    'createdAt': '2023-04-20T00:00',
+  },
+  {
+    'course': 'CCN',
+    'event': 'ISE 2',
+    'desc':
+        "Exam will consist of 2 parts, 1st part will be MCQs and 2nd will be coding. Please prepare accordingly.\nSyllabus: Module 1, 2 & 3",
+    'endDate': '2023-05-02T13:15', //in iso format
+    'createdAt': '2023-04-29T00:00',
+  },
+  {
+    'course': 'HSS',
+    'event': 'Assignment 2',
+    'desc': "Assignment 2 is out, please submit the same on Moodle.",
+    'endDate': '2023-05-02T13:15', //in iso format
+    'createdAt': '2023-04-29T00:00',
+  }
+  // {
+  //   'course': 'PCS',
+  //   'percentage': 0.5,
+  // },
+  // {
+  //   'course': 'SEVA',
+  //   'percentage': 0.4,
+  // }
+];
+
+class EventsWidget extends StatelessWidget {
+  const EventsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ListView.builder(
+        // separatorBuilder: (context, index) {
+        //   return const SizedBox(height: 10);
+        // },
+        primary: false,
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: dummyData.length,
+        itemBuilder: (context, index) {
+          final DateTime endDate = DateTime.parse(dummyData[index]['endDate']);
+          final String dayOfWeek =
+              getDayOfWeek(endDate.year, endDate.month, endDate.day);
+          final String formattedEndDate =
+              '${endDate.day}/${endDate.month}/${endDate.year} ${endDate.hour}:${endDate.minute} ($dayOfWeek)';
+
+          final String course = dummyData[index]['course'];
+          final String event = dummyData[index]['event'];
+          final String desc = dummyData[index]['desc'];
+          return GestureDetector(
+            onTap: () {
+              _showDescDialog(context, desc);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                tileColor: Colors.blueGrey.withOpacity(0.2),
+                title: Text(
+                  course,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(event),
+                    const SizedBox(height: 4),
+                    Text(
+                      formattedEndDate,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios_rounded),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+void _showDescDialog(BuildContext context, String desc) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: AlertDialog(
+          backgroundColor: Colors.blueGrey.withOpacity(0.5),
+          title: const Text('Description'),
+          content: Text(desc),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

@@ -43,6 +43,7 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
   local_auth: ^2.1.6
+  lottie: ^2.3.2
   mobile_scanner: ^3.2.0
   permission_handler: ^10.2.0
   pocketbase: ^0.7.3
@@ -56,15 +57,15 @@ dev_dependencies:
     sdk: flutter
 
 flutter_native_splash:
-  color: "#140528"
-  image: "assets/logo2.png"
+  color: "#000000"
+  image: "assets/logo6.png"
   android: true
-  ios: true
+  # ios: true
 
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon.png"
+  image_path: "assets/logo3.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

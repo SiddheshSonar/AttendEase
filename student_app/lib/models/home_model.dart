@@ -85,7 +85,7 @@ class HomeModel {
       attColor = const Color.fromARGB(255, 231, 80, 80);
     }
     return BarChartGroupData(
-      barsSpace: 4,
+      barsSpace: 2,
       x: x,
       barRods: [
         BarChartRodData(
@@ -103,21 +103,12 @@ class HomeModel {
     );
   }
 
-  // Future<void> cancelSubscriptions() async {
-  //   await PbDb.pb.collection('students').unsubscribe();
-  //   await PbDb.pb.collection('courses').unsubscribe();
-  // }
-
   Future<void> populateUserData() async {
     await PbDb.pb
         .collection("students")
         .getOne(user.id, expand: "courses_enrolled")
         .then((RecordModel value) {
-      // print(value.expand["courses_enrolled"]);
-      // itterate this field and add data to create calendar
-
       _homeController.attendance = value.data["attendance"];
-      // print(_homeController.attendance);
       createNotificationQueue(value);
       populateGraph();
       _homeController.isFetching.value = false;
@@ -152,22 +143,14 @@ class HomeModel {
   }
 
   Future<void> createNotificationQueue(RecordModel value) async {
-    NotificationService()
-        .cancelAllScheduled(); // cancels all previous scheduled notifications
+    NotificationService().cancelAllScheduled();
     for (var course in value.expand["courses_enrolled"]!) {
-      // _homeController.courses[course["course_name"]] = course["lectures"];
-      // print(course);
-      // Map data = course as Map;
-      // print(course.data["tt"]);
       Map data = course.data["tt"];
 
       for (var key in data.keys) {
-        // print(key);
         int weekDay = int.parse(key);
         List timing = data[key];
-        // print(timing);
         for (var element in timing) {
-          // print(element);
           String courseName = course.data["course_name"];
           String roomNo = course.data["room_no"];
 
@@ -176,8 +159,6 @@ class HomeModel {
           int eHr = int.parse(element[2]);
           int eMin = int.parse(element[3]);
           DateTime now = DateTime.now();
-          // task is to add this event for the next 7 days accordng to week day and time
-
           for (int i = 0; i < 7; i++) {
             DateTime date =
                 DateTime(now.year, now.month, now.day).add(Duration(days: i));
@@ -191,21 +172,11 @@ class HomeModel {
                   date: date,
                   startTime: startTime,
                   endTime: endTime));
-
-              // NotificationService().scheduleNotification(
-              //     scheduledNotificationDateTime: startTime.subtract(
-              //         const Duration(minutes: 10)),
-              //     title: "Class Reminder",
-              //     body: "$courseName in $roomNo");
-              // find course name in _homeController.attendance and get the number of lectures
               int id = Random().nextInt(100000);
               if (_homeController.attendance[courseName] != null) {
-                int lecturesAttended = _homeController
-                    .attendance[courseName]!.length; // number of lectures
-                // print("$courseName has ${_homeController.courses['$courseName']} lectures of which $lecturesAttended are attended");
-                // show user notification indicating that if the lecture isn't attended then what will be their attendance percentage
-                // double currentAttendPercentage = lecturesAttended * 100 /
-                //     _homeController.courses[courseName]!;
+                int lecturesAttended =
+                    _homeController.attendance[courseName]!.length;
+                print(courseName);
                 double newAttendPercentage = (lecturesAttended + 1) *
                         100 /
                         _homeController.courses[courseName]! +
@@ -225,9 +196,7 @@ class HomeModel {
                     "$courseName in $roomNo",
                     startTime.subtract(const Duration(minutes: 10)));
               }
-              // print("scheduled notification for $courseName at ${startTime.subtract(const Duration(minutes: 10))}");
             }
-            // create local scheduled notification
           }
         }
       }
