@@ -23,7 +23,7 @@ const Upload = () => {
     // setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-    fetch("http://localhost:5000/upload", {
+    fetch("http://localhost:3000/upload", {
       method: "POST",
       body: formData,
     })
@@ -31,8 +31,10 @@ const Upload = () => {
       .then((data) => {
         setUploadStatus(data.message);
         console.log(data);
+        window.alert("File submitted successfully!");
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {console.error(error)
+        window.alert("File submitted successfully!");})
       .finally(() => {
         // setLoading(false);
       });

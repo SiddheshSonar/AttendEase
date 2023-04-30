@@ -73,13 +73,15 @@ const StudTable = () => {
                     <td>{record.division}</td>
                     <td className="atbt">
                       <button
-                        onClick={() => handleButtonClick(record,"CONFIRM ADDITION")}
+                        onClick={() => {handleButtonClick(record,"CONFIRM ADDITION");
+                      window.scrollTo({top: 0, behavior: "smooth"})}}
                         className="btn btn-primary"
                       ><AddCircleIcon style={{marginRight:"4px",marginBottom: "3px"}}/>
                         ADD
                       </button>
                       <button
-                        onClick={() => handleButtonClick(record,"CONFIRM DELETION")}
+                        onClick={() => {handleButtonClick(record,"CONFIRM DELETION");
+                      window.scrollTo({top: 0, behavior: "smooth"})}}
                         className="btn btn-danger"
                       ><RemoveCircleIcon style={{marginRight:"4px",marginBottom: "3px"}}/>
                         DELETE

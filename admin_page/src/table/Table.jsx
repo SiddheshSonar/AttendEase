@@ -65,7 +65,8 @@ const StudTable = () => {
                     <td>{record.division}</td>
                     <td className="atbt">
                       <button
-                        onClick={() => setSelectedRecord(record)}
+                        onClick={() => {setSelectedRecord(record);
+                        window.scrollTo({top: 0, behavior: "smooth"})}}
                         className="btn btn-primary"
                       >
                         <BarChartIcon style={{marginBottom:"4px"}}/>View Attendance
