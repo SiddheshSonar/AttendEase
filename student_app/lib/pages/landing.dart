@@ -39,6 +39,7 @@ class _LandingState extends State<Landing> {
       themeMode: ThemeMode.system,
       theme: light,
       darkTheme: dark,
+      debugShowCheckedModeBanner: false,
       home: (isLogin) ? const Main() : const Login(),
     );
   }

@@ -31,7 +31,7 @@ class _MainState extends State<Main> {
 
   final Duration pageAnimationDuration = const Duration(milliseconds: 300);
   final Curve pageAnimationCurve = Curves.easeInOut;
-  RxInt _currentPage = 0.obs;
+  final RxInt _currentPage = 0.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -283,8 +283,6 @@ class HomePage extends StatelessWidget {
                   : const Center(child: CircularProgressIndicator());
             }),
           ),
-          // TODO: event list
-          // implement event list with dummy data
           const EventsWidget()
         ],
       ),

@@ -123,10 +123,10 @@ Future<bool> updateState(
     RecordModel data = await PbDb.pb.collection('rohantest').getOne(
           '959gfscofc4dyw0',
         );
-    print(data);
+    // print(data);
     String encryptHash = data.data['encrypted_string'];
-    print(encryptHash);
-    print(scanHash);
+    // print(encryptHash);
+    // print(scanHash);
     if (encryptHash == scanHash) {
       // print("Success");
       final RecordModel userData =
@@ -154,7 +154,7 @@ Future<bool> updateState(
       return true;
     }
   } catch (e) {
-    print(e);
+    // print(e);
     Get.closeAllSnackbars();
     Get.snackbar("Error ", "Invalid QR Code");
   }

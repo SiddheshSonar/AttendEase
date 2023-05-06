@@ -29,16 +29,24 @@ class HomeModel {
         _homeController.attendance = e.record?.data["attendance"];
         try {
           submitCheck.fire();
+          if (!Get.isOverlaysClosed) {
+            await Future.delayed(const Duration(seconds: 2), () {
+              Get.back(closeOverlays: true);
+            });
+            Get.closeAllSnackbars();
+            Get.snackbar('DAA', 'Attendance Submitted');
+          }
         } catch (e) {
           // print(e);
         }
 
-        if (!Get.isOverlaysClosed) {
-          await Future.delayed(const Duration(seconds: 2), () {
-            Get.back(closeOverlays: true);
-          });
-          // Get.back(closeOverlays: true);
-        }
+        // if (!Get.isOverlaysClosed) {
+        //   await Future.delayed(const Duration(seconds: 2), () {
+        //     Get.back(closeOverlays: true);
+        //   });
+        //   Get.closeAllSnackbars();
+        //   // Get.snackbar('', message)
+        // }
         int i = 0;
         _homeController.items.clear();
         _homeController.percentages.clear();
