@@ -1,4 +1,4 @@
-import 'package:attendease/db/notes_db.dart';
+import 'package:attendease/database/notes_db.dart';
 import 'package:attendease/models/notes_model.dart';
 import 'package:attendease/pages/edit_note_page.dart';
 import 'package:flutter/material.dart';

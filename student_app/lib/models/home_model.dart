@@ -184,11 +184,10 @@ class HomeModel {
               if (_homeController.attendance[courseName] != null) {
                 int lecturesAttended =
                     _homeController.attendance[courseName]!.length;
-                print(courseName);
+                // print(courseName);
                 double newAttendPercentage = (lecturesAttended + 1) *
-                        100 /
-                        _homeController.courses[courseName]! +
-                    1;
+                    100 /
+                    (_homeController.courses[courseName]! + 1);
                 double newNotAttendPercentage = (lecturesAttended) *
                     100 /
                     (_homeController.courses[courseName]! + 1);

@@ -2,7 +2,7 @@ import 'package:attendease/components/notes_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:attendease/models/notes_model.dart';
-import 'package:attendease/db/notes_db.dart';
+import 'package:attendease/database/notes_db.dart';
 import 'package:attendease/pages/edit_note_page.dart';
 import 'package:attendease/pages/notes_details_page.dart';
 
