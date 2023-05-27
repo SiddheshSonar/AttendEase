@@ -8,6 +8,7 @@ import 'package:attendease/pages/landing.dart';
 import 'package:attendease/views/login_screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -34,6 +35,9 @@ void main() async {
   await checkBluetoothPerms();
   await GetStorage.init();
   FlutterNativeSplash.remove();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
   runApp(const Landing());
 }
 

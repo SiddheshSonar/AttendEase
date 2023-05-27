@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,13 +22,17 @@ Future<void> checkBluetoothPerms() async {
     PermissionStatus notification = await Permission.notification.request();
     if (notification.isGranted) {
       //print("notification granted");
-
-
     }
     await flutterBeacon.initializeScanning;
+    if (Platform.isAndroid) {
+      await flutterBeacon.initializeScanning;
+    } else if (Platform.isIOS) {
+      await flutterBeacon.requestAuthorization;
+      await flutterBeacon.initializeAndCheckScanning;
+    }
   } on PlatformException catch (e) {
-    Get.snackbar("Permission Error", "Error: ${e.code}: ${e.message}");
+    // Get.snackbar("Permission Error", "Error: ${e.code}: ${e.message}");
     // library failed to initialize, check code and message
-    //print("Perms Error: ${e.code}: ${e.message}");
+    print("Perms Error: ${e.code}: ${e.message}");
   }
 }

@@ -19,11 +19,13 @@ class _EventCalendarState extends State<EventCalendar> {
   @override
   void initState() {
     super.initState();
+    widget._homeController.calendarKey.currentState?.animateTo(100);
   }
 
   @override
   Widget build(BuildContext context) {
     return DayView(
+      key: widget._homeController.calendarKey,
       eventTileBuilder: (date, events, boundary, startDuration, endDuration) {
         return Container(
           decoration: BoxDecoration(
@@ -58,11 +60,15 @@ class _EventCalendarState extends State<EventCalendar> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // IconButton(
-                    //     onPressed: () {
-                    //       DayViewState().previousPage();
-                    //     },
-                    //     icon: Icon(Icons.arrow_back_ios)),
+                    InkWell(
+
+                        // padding: EdgeInsets.zero,
+
+                        onTap: () {
+                          widget._homeController.calendarKey.currentState
+                              ?.previousPage();
+                        },
+                        child: const Icon(Icons.arrow_back_ios)),
                     Text(
                       // format date in dd-mm-yyyy (dayofweek in string ex Monday)
                       "${date.day}-${date.month}-${date.year} (${getDayOfWeek(date.year, date.month, date.day)})",
@@ -73,8 +79,12 @@ class _EventCalendarState extends State<EventCalendar> {
                         color: Colors.blueGrey,
                       ),
                     ),
-                    // IconButton(
-                    //     onPressed: () {}, icon: Icon(Icons.arrow_forward_ios)),
+                    InkWell(
+                        onTap: () {
+                          widget._homeController.calendarKey.currentState
+                              ?.nextPage();
+                        },
+                        child: const Icon(Icons.arrow_forward_ios)),
                   ],
                 ),
               ),

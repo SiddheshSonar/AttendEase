@@ -3,11 +3,10 @@ import 'package:attendease/models/login_model.dart';
 import 'package:attendease/views/home.dart';
 import 'package:attendease/views/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:rive/rive.dart';
 import '../components/students.dart';
 
 class LoginController extends GetxController {

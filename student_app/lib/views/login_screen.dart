@@ -271,7 +271,7 @@ class _LoginState extends State<Login> {
                           controller: _loginController.email,
                           validator: (value) {
                             if (value!.isEmpty ||
-                                !RegExp(r'^[a-zA-Z0-9.-]+@spit.ac.in$')
+                                !RegExp(r'^[a-zA-Z0-9._-]+@spit.ac.in$')
                                     .hasMatch(value)) {
                               return 'Domain should be spit.ac.in';
                             } else {

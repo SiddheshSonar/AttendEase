@@ -1,4 +1,4 @@
-import 'package:attendease/db/notes_db.dart';
+import 'package:attendease/database/notes_db.dart';
 import 'package:attendease/models/notes_model.dart';
 import 'package:attendease/pages/edit_note_page.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +87,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         icon: const Icon(Icons.delete),
         onPressed: () async {
           await NotesDatabase.instance.delete(widget.noteId);
-
+          if(!mounted) return;
           Navigator.of(context).pop();
         },
       );

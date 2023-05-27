@@ -28,6 +28,7 @@ class HomeController extends GetxController {
   late HomeModel homeModel;
   PageController homePageController = PageController();
   final EventController eventController = EventController();
+  final calendarKey = GlobalKey<DayViewState>();
   // add data to this controller receieved from the server
   HomeController() {
     home = [

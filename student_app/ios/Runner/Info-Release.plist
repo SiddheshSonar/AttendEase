@@ -43,6 +43,25 @@
 		</array>
 		<key>NSBluetoothAlwaysUsageDescription</key>
 		<string>Bluetooth is required for validation</string>
+		<key>NSFaceIDUsageDescription</key>
+		<string>App requires biometrics to verify user identity</string>
+		<key>NSCameraUsageDescription</key>
+		<string>This app needs camera access to scan QR codes</string>
+		<!-- <key>NSPhotoLibraryUsageDescription</key>
+		<string>This app needs photos access to get QR code from photo library</string> -->
+		<key>NSLocationWhenInUseUsageDescription</key>
+			<string>Location required for nearby scanning</string>
+		<!-- Always -->
+		<!-- for iOS 11 + -->
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+			<string>Location required for nearby scanning</string>
+			<!-- for iOS 9/10 -->
+		<key>NSLocationAlwaysUsageDescription</key>
+			<string>Location required for nearby scanning</string>
+			<!-- Bluetooth Privacy -->
+			<!-- for iOS 13 + -->
+		<!-- <key>NSBluetoothAlwaysUsageDescription</key>
+			<string>Bluetooth is required for validation</string> -->
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>CADisableMinimumFrameDurationOnPhone</key>

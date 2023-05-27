@@ -6,7 +6,6 @@ import 'package:attendease/database/db.dart';
 import 'package:attendease/main.dart';
 import 'package:attendease/pages/event_cal.dart';
 import 'package:attendease/views/login_screen.dart';
-import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
